@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class divertPlayer : MonoBehaviour {
+public class ThiefCollection: MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -16,8 +16,8 @@ public class divertPlayer : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<pathTest>();
-        player.firstCollision = true;
+        var player = other.GetComponent<pathTester>();
+        player.firstCollision++;
         //need one object of a collision to have a rigidbody
     }
 }

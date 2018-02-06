@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class FieldOfView : MonoBehaviour
 {
 
+    NavMeshAgent nav;
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
@@ -25,6 +27,7 @@ public class FieldOfView : MonoBehaviour
 
     void Start()
     {
+        nav = GetComponent<NavMeshAgent>();
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
@@ -54,6 +57,7 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
+            nav.destination = target.transform.position; //trying to follow target
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
@@ -62,6 +66,7 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
+                    //nav.destination = target.transform.position; //trying to follow target
                 }
             }
         }

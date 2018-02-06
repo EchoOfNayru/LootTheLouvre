@@ -8,23 +8,23 @@ public class pathTest : MonoBehaviour {
     NavMeshAgent nav;
     public GameObject artPiece;
     public GameObject artPiece2;
-    public float firstCollision;
+    public bool firstCollision;
 
 	void Start () {
         nav = GetComponent<NavMeshAgent>();
-        firstCollision = 1;
+        firstCollision = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-        if(firstCollision == 1)
+        if(firstCollision == false)
         {
             nav.destination = artPiece.transform.position;
-            nav.SetAreaCost(3, nav.GetAreaCost(3) + 1);
-            Debug.Log(nav.GetAreaCost(3));
+           // nav.SetAreaCost(3, nav.GetAreaCost(3) + 1);
+           // Debug.Log(nav.GetAreaCost(3));
         }
-        else if(firstCollision == 2)
+        else if(firstCollision == true)
         {
             nav.destination = artPiece2.transform.position;
         }

@@ -16,8 +16,8 @@ public class divertPlayer : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<pathTest>();
-        player.firstCollision++;
+        var player = other.GetComponent<guardPathTest>();
+        player.firstCollision = true;
         //need one object of a collision to have a rigidbody
     }
 }

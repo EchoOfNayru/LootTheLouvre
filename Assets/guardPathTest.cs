@@ -37,20 +37,26 @@ public class guardPathTest : MonoBehaviour {
         //statues[3] = artPiece4;
 
         statueIndex = 0;
-        nav.destination = statues[statueIndex].transform.position;
-
+        Vector3 destPos = statues[statueIndex].transform.position;
+        destPos.y = transform.position.y;
+        nav.destination = destPos;
     }
-
+   // public GameObject thing;
     // Update is called once per frame
     void Update()
     {
+       // nav.destination = thing.transform.position;
+
+
+       // nav.destination = statues[statueIndex].transform.position;
         //set an if statement here, related to robber
-        nav.SetAreaCost(0, 10);
-        Debug.Log(nav.GetAreaCost(0));
-        Debug.DrawLine(transform.position, nav.destination, Color.green);
-        if(pathComplete())
+       nav.SetAreaCost(0, 10);
+
+        //// Debug.Log(nav.GetAreaCost(0));
+        // Debug.DrawLine(transform.position, nav.destination, Color.green);
+        if (pathComplete())
         {
-            if(statues[statueIndex].activeSelf == false)
+            if (statues[statueIndex].activeSelf == false)
             {
                 artAlarm = true;
             }
@@ -59,11 +65,14 @@ public class guardPathTest : MonoBehaviour {
             {
                 statueIndex = 0;
             }
-            nav.destination = statues[statueIndex].transform.position;
+            Vector3 destPos = statues[statueIndex].transform.position;
+            destPos.y = transform.position.y;
+            nav.destination = destPos;
         }
+       
         //thief alarm, if they spot thief all guards go to thief
         // if art is gone then they will move 3x speed
-        
+
 
         //if (firstCollision == false)
         //{
@@ -83,7 +92,7 @@ public class guardPathTest : MonoBehaviour {
         //{
         //    nav.destination = artPiece4.transform.position;
         //}
-        if(artAlarm == true)
+        if (artAlarm == true)
         {
             nav.speed = 8f;
         }
@@ -94,7 +103,7 @@ public class guardPathTest : MonoBehaviour {
     {
         if (!nav.pathPending)
         {
-            if (nav.stoppingDistance >= nav.remainingDistance)
+            if (nav.stoppingDistance >= Vector3.Distance(transform.position, statues[statueIndex].transform.position))
             {
                 if (!nav.hasPath || nav.velocity.sqrMagnitude == 0f)
                 {

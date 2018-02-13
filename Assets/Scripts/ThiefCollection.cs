@@ -22,5 +22,6 @@ public class ThiefCollection: MonoBehaviour {
             player.firstCollision++;
             Debug.Log(player.firstCollision);
         }
+        //need one object of a collision to have a rigidbody
     }
 }

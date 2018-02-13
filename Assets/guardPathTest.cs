@@ -45,6 +45,8 @@ public class guardPathTest : MonoBehaviour {
     void Update()
     {
         //set an if statement here, related to robber
+        nav.SetAreaCost(0, 10);
+        Debug.Log(nav.GetAreaCost(0));
         Debug.DrawLine(transform.position, nav.destination, Color.green);
         if(pathComplete())
         {

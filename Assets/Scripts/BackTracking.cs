@@ -6,12 +6,12 @@ public class BackTracking : MonoBehaviour {
 
     public GameObject player;
     pathTester pathing;
-    FieldOfView fov;
+    //FieldOfView fov;
 
 	// Use this for initialization
 	void Start () {
         pathing = player.GetComponent<pathTester>();
-        fov = player.GetComponent<FieldOfView>();
+        //fov = player.GetComponent<FieldOfView>();
 	}
 	
 	// Update is called once per frame
@@ -21,7 +21,9 @@ public class BackTracking : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (pathing.backTracking == true)
+        pathTester CollisionCheck;
+        CollisionCheck = other.GetComponent<pathTester>();
+        if (CollisionCheck != null && pathing.backTracking)
         {
             pathing.backTracking = false;
             pathing.firstCollision = pathing.storedValue;

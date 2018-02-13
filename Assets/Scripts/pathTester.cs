@@ -21,10 +21,12 @@ public class pathTester : MonoBehaviour {
     public float storedValue;
 
     public bool backTracking;
-
     private int backtrackTimer;
-    private GameObject objectToDestroy;
-    
+
+    //randomizers
+    public float moveSpeed;
+    public float FoVRadius;
+    public float FoVAngle;
 
 	void Start () {
         nav = GetComponent<NavMeshAgent>();
@@ -32,6 +34,14 @@ public class pathTester : MonoBehaviour {
         fov = GetComponent<FieldOfView>();
         backtrackTimer = 0;
         backTracking = false;
+
+        //randomizers
+        moveSpeed = Random.Range(4f, 12f);
+        nav.speed = moveSpeed;
+        FoVRadius = Random.Range(12f, 20f);
+        fov.viewRadius = FoVRadius;
+        FoVAngle = Random.Range(80f, 135f);
+        fov.viewAngle = FoVAngle;
 	}
 	
 	// Update is called once per frame

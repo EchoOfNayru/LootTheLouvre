@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class FieldOfView : MonoBehaviour
 {
     //bool thiefAlarmbool = false;
-    NavMeshAgent nav;
+    //NavMeshAgent nav;
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
@@ -28,9 +28,11 @@ public class FieldOfView : MonoBehaviour
 
     public GameObject point;
 
+    public int SeenTimer;
+
     void Start()
     {
-        nav = GetComponent<NavMeshAgent>();
+        //nav = GetComponent<NavMeshAgent>();
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
@@ -64,9 +66,11 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
-            //thiefAlarm(target.position);
-            //nav.destination = target.transform.position; //trying to follow target
             Vector3 dirToTarget = (target.position - transform.position).normalized;
+
+            bool canSeeTarget = false;
+            guardPathTest guardPathing = GetComponent<guardPathTest>();
+            
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
@@ -83,13 +87,22 @@ public class FieldOfView : MonoBehaviour
                         pathing.firstCollision = 5;
                         pathing.backTracking = true;
                     }
-                    
-                    thiefAlarm(target.position);
-                    nav.destination = target.transform.position; //trying to follow target
+                    if (guardPathing != null)
+                    {
+                        guardPathing.ChasingThief = true;
+                        canSeeTarget = true;
+                        SeenTimer = 100;
+                    }
+                    //thiefAlarm(target.position);
                     
                     //Vector3 tempVec = new Vector3(transform.position.x, transform.position.y, transform.position.z);
                     //GameObject.Instantiate(point, tempVec, Quaternion.identity);
                 }
+            }
+            SeenTimer--;
+            if (SeenTimer == 0 && !canSeeTarget)
+            {
+                guardPathing.ChasingThief = false;
             }
         }
     }
@@ -232,13 +245,13 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
-    //void thiefAlarm(Vector3 robberPos)
-    //{
-    //    guardPathTest[] guardArray = FindObjectsOfType<guardPathTest>();
-    //    for (int i = 0; i < guardArray.Length; i++)
-    //    {
-    //        guardArray[i].nav.destination = robberPos;
-    //        guardArray[i].nav.speed = 6;
-    //    }
-    //}
+    void thiefAlarm(Vector3 robberPos)
+    {
+        guardPathTest[] guardArray = FindObjectsOfType<guardPathTest>();
+        for (int i = 0; i < guardArray.Length; i++)
+        {
+            guardArray[i].nav.destination = robberPos;
+            //guardArray[i].nav.speed = 6;
+        }
+    }
 }

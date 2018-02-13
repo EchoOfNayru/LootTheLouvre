@@ -10,6 +10,7 @@ public class FieldOfView : MonoBehaviour
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
+    pathTester pathing;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
@@ -25,6 +26,8 @@ public class FieldOfView : MonoBehaviour
     public int edgeResolveIterations;
     public float edgeDstThreshold;
 
+    public GameObject point;
+
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
@@ -32,6 +35,7 @@ public class FieldOfView : MonoBehaviour
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
         StartCoroutine("FindTargetsWithDelay", .2f);
+        pathing = GetComponent<pathTester>();
     }
 
 
@@ -66,7 +70,14 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
-                    //nav.destination = target.transform.position; //trying to follow target
+                    if (pathing.firstCollision != 5)
+                    {
+                        pathing.storedValue = pathing.firstCollision;
+                    }
+                    pathing.firstCollision = 5;
+                    pathing.backTracking = true;
+                    //Vector3 tempVec = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                    //GameObject.Instantiate(point, tempVec, Quaternion.identity);
                 }
             }
         }

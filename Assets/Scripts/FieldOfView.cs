@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class FieldOfView : MonoBehaviour
 {
-    bool thiefAlarmbool = false;
+    //bool thiefAlarmbool = false;
     NavMeshAgent nav;
     public float viewRadius;
     [Range(0, 360)]
@@ -64,8 +64,8 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
-            thiefAlarm(target.position);
-            thiefAlarmbool = true;
+            //thiefAlarm(target.position);
+            //thiefAlarmbool = true;
             nav.destination = target.transform.position; //trying to follow target
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
@@ -226,13 +226,13 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
-    void thiefAlarm(Vector3 robberPos)
-    {
-        guardPathTest[] guardArray = FindObjectsOfType<guardPathTest>();
-        for (int i = 0; i < guardArray.Length; i++)
-        {
-            guardArray[i].nav.destination = robberPos;
-            guardArray[i].nav.speed = 6;
-        }
-    }
+    //void thiefAlarm(Vector3 robberPos)
+    //{
+    //    guardPathTest[] guardArray = FindObjectsOfType<guardPathTest>();
+    //    for (int i = 0; i < guardArray.Length; i++)
+    //    {
+    //        guardArray[i].nav.destination = robberPos;
+    //        guardArray[i].nav.speed = 6;
+    //    }
+    //}
 }

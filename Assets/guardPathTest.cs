@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class guardPathTest : MonoBehaviour {
 
-    public NavMeshAgent nav;
+    NavMeshAgent nav;
     //public GameObject artPiece;
     //public GameObject artPiece2;
     //public GameObject artPiece3;

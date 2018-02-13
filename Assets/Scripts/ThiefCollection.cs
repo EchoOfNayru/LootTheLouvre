@@ -16,8 +16,11 @@ public class ThiefCollection: MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<pathTester>();
-        player.firstCollision++;
-        //need one object of a collision to have a rigidbody
+        if (other.tag == "Player")
+        {
+            var player = other.GetComponent<pathTester>();
+            player.firstCollision++;
+            Debug.Log(player.firstCollision);
+        }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class guardPathTest : MonoBehaviour {
 
-    NavMeshAgent nav;
+    public NavMeshAgent nav;
     //public GameObject artPiece;
     //public GameObject artPiece2;
     //public GameObject artPiece3;
@@ -17,6 +17,7 @@ public class guardPathTest : MonoBehaviour {
     //public bool[] artPieces;
     public GameObject[] statues;
     public int statueIndex;
+    bool artAlarm = false;
     void Start()
     {
         //artPieces = new bool[4];
@@ -44,9 +45,13 @@ public class guardPathTest : MonoBehaviour {
     void Update()
     {
         //set an if statement here, related to robber
-
+        Debug.DrawLine(transform.position, nav.destination, Color.green);
         if(pathComplete())
         {
+            if(statues[statueIndex].activeSelf == false)
+            {
+                artAlarm = true;
+            }
             statueIndex++;
             if (statueIndex > statues.Length - 1)
             {
@@ -76,6 +81,10 @@ public class guardPathTest : MonoBehaviour {
         //{
         //    nav.destination = artPiece4.transform.position;
         //}
+        if(artAlarm == true)
+        {
+            nav.speed = 8f;
+        }
     }
 
 

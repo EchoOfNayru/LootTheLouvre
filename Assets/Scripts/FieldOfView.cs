@@ -64,9 +64,9 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
-            thiefAlarm(target.position);
+            //thiefAlarm(target.position);
             thiefAlarmbool = true;
-            nav.destination = target.transform.position; //trying to follow target
+            //nav.destination = target.transform.position; //trying to follow target
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
@@ -75,12 +75,19 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
-                    if (pathing.firstCollision != 5)
+                    if(pathing != null)
                     {
-                        pathing.storedValue = pathing.firstCollision;
+                        if (pathing.firstCollision != 5)
+                        {
+                            pathing.storedValue = pathing.firstCollision;
+                        }
+                        pathing.firstCollision = 5;
+                        pathing.backTracking = true;
                     }
-                    pathing.firstCollision = 5;
-                    pathing.backTracking = true;
+                    
+                    thiefAlarm(target.position);
+                    nav.destination = target.transform.position; //trying to follow target
+                    
                     //Vector3 tempVec = new Vector3(transform.position.x, transform.position.y, transform.position.z);
                     //GameObject.Instantiate(point, tempVec, Quaternion.identity);
                 }
@@ -232,7 +239,7 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < guardArray.Length; i++)
         {
             guardArray[i].nav.destination = robberPos;
-            guardArray[i].nav.speed = 6;
+            //guardArray[i].nav.speed = 6;
         }
     }
 }

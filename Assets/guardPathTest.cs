@@ -6,92 +6,54 @@ using UnityEngine.AI;
 public class guardPathTest : MonoBehaviour {
 
     public NavMeshAgent nav;
-    //public GameObject artPiece;
-    //public GameObject artPiece2;
-    //public GameObject artPiece3;
-    //public GameObject artPiece4;
-    //public bool firstCollision;
-    //public bool secondCollision;
-    //public bool thirdCollision;
-    //public bool fourthCollision;
-    //public bool[] artPieces;
     public GameObject[] statues;
     public int statueIndex;
     bool artAlarm = false;
+
+    //Zach
+    public bool ChasingThief;
+    public GameObject Thief;
+    FieldOfView fov;
+
+    //Randomizer
+    public float moveSpeed;
+    public float FoVRadius;
+    public float FoVAngle;
+
     void Start()
     {
-        //artPieces = new bool[4];
         nav = GetComponent<NavMeshAgent>();
-        //firstCollision = false;
-        //secondCollision = true;
-        //thirdCollision = true;
-        //fourthCollision = true;
-        //artPieces[0] = firstCollision;
-        //artPieces[1] = secondCollision;
-        //artPieces[2] = thirdCollision;
-        //artPieces[3] = fourthCollision;
-
-        //statues[0] = artPiece;
-        //statues[1] = artPiece2;
-        //statues[2] = artPiece3;
-        //statues[3] = artPiece4;
-
+        fov = GetComponent<FieldOfView>();
         statueIndex = 0;
         Vector3 destPos = statues[statueIndex].transform.position;
         destPos.y = transform.position.y;
         nav.destination = destPos;
+
+        //Randomizer
+        moveSpeed = Random.Range(3f, 10f);
+        nav.speed = moveSpeed;
+        FoVRadius = Random.Range(10f, 16f);
+        fov.viewRadius = FoVRadius;
+        FoVAngle = Random.Range(75f, 114f);
+        fov.viewAngle = FoVAngle;
+
+        //Zach
+        ChasingThief = false;
     }
    // public GameObject thing;
     // Update is called once per frame
     void Update()
     {
-       // nav.destination = thing.transform.position;
-
-
-       // nav.destination = statues[statueIndex].transform.position;
-        //set an if statement here, related to robber
-       nav.SetAreaCost(0, 10);
-
-        //// Debug.Log(nav.GetAreaCost(0));
-        // Debug.DrawLine(transform.position, nav.destination, Color.green);
-        if (pathComplete())
+        //Zach
+        if (!ChasingThief)
         {
-            if (statues[statueIndex].activeSelf == false)
-            {
-                artAlarm = true;
-            }
-            statueIndex++;
-            if (statueIndex > statues.Length - 1)
-            {
-                statueIndex = 0;
-            }
-            Vector3 destPos = statues[statueIndex].transform.position;
-            destPos.y = transform.position.y;
-            nav.destination = destPos;
+            nav.destination = statues[statueIndex].transform.position;
         }
-       
-        //thief alarm, if they spot thief all guards go to thief
-        // if art is gone then they will move 3x speed
+        if (ChasingThief)
+        {
+            nav.destination = Thief.transform.position;
+        }
 
-
-        //if (firstCollision == false)
-        //{
-        //    nav.destination = artPiece.transform.position;
-        // //   nav.SetAreaCost(3, nav.GetAreaCost(3) + 1);
-        //    //Debug.Log(nav.GetAreaCost(3));
-        //}
-        //else if (secondCollision == false)
-        //{
-        //    nav.destination = artPiece2.transform.position;
-        //}
-        //else if (thirdCollision == false)
-        //{
-        //    nav.destination = artPiece3.transform.position;
-        //}
-        //else if (fourthCollision == false)
-        //{
-        //    nav.destination = artPiece4.transform.position;
-        //}
         if (artAlarm == true)
         {
             nav.speed = 8f;
@@ -99,20 +61,20 @@ public class guardPathTest : MonoBehaviour {
     }
 
 
-    protected bool pathComplete()
-    {
-        if (!nav.pathPending)
-        {
-            if (nav.stoppingDistance >= Vector3.Distance(transform.position, statues[statueIndex].transform.position))
-            {
-                if (!nav.hasPath || nav.velocity.sqrMagnitude == 0f)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    //protected bool pathComplete()
+    //{
+    //    if (!nav.pathPending)
+    //    {
+    //        if (nav.stoppingDistance >= Vector3.Distance(transform.position, statues[statueIndex].transform.position))
+    //        {
+    //            if (!nav.hasPath || nav.velocity.sqrMagnitude == 0f)
+    //            {
+    //                return true;
+    //            }
+    //        }
+    //    }
+    //    return false;
+    //}
 
 }
 

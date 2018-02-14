@@ -15,6 +15,8 @@ public class pathTester : MonoBehaviour {
     public GameObject artPiece3;
     public GameObject artLocation4;
     public GameObject artPiece4;
+    public GameObject artLocation5;
+    public GameObject artPiece5;
     public GameObject exit;
 
     public float firstCollision;

@@ -70,10 +70,15 @@ public class pathTester : MonoBehaviour {
         }
         else if (firstCollision == 4)
         {
-            nav.destination = exit.transform.position;
+            nav.destination = artLocation5.transform.position;
             artPiece4.SetActive(false);
         }
         else if (firstCollision == 5)
+        {
+            nav.destination = exit.transform.position;
+            artPiece5.SetActive(false);
+        }
+        else if (firstCollision == 6)
         {
             nav.destination = fov.point.transform.position;
         }

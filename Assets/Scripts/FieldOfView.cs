@@ -80,11 +80,11 @@ public class FieldOfView : MonoBehaviour
                     visibleTargets.Add(target);
                     if(pathing != null)
                     {
-                        if (pathing.firstCollision != 5)
+                        if (pathing.firstCollision != 6)
                         {
                             pathing.storedValue = pathing.firstCollision;
                         }
-                        pathing.firstCollision = 5;
+                        pathing.firstCollision = 6;
                         pathing.backTracking = true;
                     }
                     if (guardPathing != null)
